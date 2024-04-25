@@ -11,12 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.betuel.translatorapp.android.core.presentation.Routes
 import com.betuel.translatorapp.android.translate.presentation.AndroidTranslateViewModel
 import com.betuel.translatorapp.android.translate.presentation.TranslateScreen
+import com.betuel.translatorapp.translate.presentation.TranslateEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,8 +51,24 @@ fun TranslateRoot() {
             val state by viewmodel.state.collectAsState()
             TranslateScreen(
                 state = state,
-                onEvent = viewmodel::onEvent
+                onEvent = { event ->
+                    when (event) {
+                        is TranslateEvent.RecordAudio -> {
+                            navController.navigate(Routes.VOICE_TO_TEXT + "/${state.fromLanguage.language.langCode}")
+                        }
+
+                        else -> viewmodel.onEvent(event)
+                    }
+                }
             )
+        }
+        composable(route = Routes.VOICE_TO_TEXT + "/{languageCode}", arguments = listOf(
+            navArgument("languageCode") {
+                type = NavType.StringType
+                defaultValue = "en"
+            }
+        )) {
+            Text(text = "Voice-to-text")
         }
     }
 }
