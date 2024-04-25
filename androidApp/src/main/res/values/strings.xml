@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="close">close</string>
+    <string name="open">open</string>
+    <string name="swap_languages">swap_languages</string>
+</resources>

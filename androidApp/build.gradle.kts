@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.compose.navigation)
     implementation(libs.compose.icons.extended)
+    implementation(libs.coil.compose)
 
     kapt(libs.hilt.android.compiler)
     kapt(libs.hilt.compiler)

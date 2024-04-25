@@ -24,6 +24,8 @@ turbine = "0.7.0"
 j-unit = "4.13.2"
 test-runner = "1.5.2"
 
+ksp = "1.5.30-1.0.0"
+
 [libraries]
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -80,3 +82,4 @@ sqlDelightGradle = { id = "com.squareup.sqldelight:gradle-plugin", version.ref =
 sqlDelight = { id = "com.squareup.sqldelight", version.ref = "sql-delight" }
 hiltGradle = { id = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
