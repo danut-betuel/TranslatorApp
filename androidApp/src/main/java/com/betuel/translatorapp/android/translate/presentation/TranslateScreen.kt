@@ -1,6 +1,7 @@
 package com.betuel.translatorapp.android.translate.presentation
 
 import android.annotation.SuppressLint
+import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -24,8 +25,10 @@ import com.betuel.translatorapp.android.R
 import com.betuel.translatorapp.android.translate.presentation.components.LanguageDropDown
 import com.betuel.translatorapp.android.translate.presentation.components.SwapLanguagesButton
 import com.betuel.translatorapp.android.translate.presentation.components.TranslateTextField
+import com.betuel.translatorapp.android.translate.presentation.components.rememberTextToSpeech
 import com.betuel.translatorapp.translate.presentation.TranslateEvent
 import com.betuel.translatorapp.translate.presentation.TranslateState
+import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -87,6 +90,7 @@ fun TranslateScreen(
             item {
                 val clipboardManager = LocalClipboardManager.current
                 val keyboardController = LocalSoftwareKeyboardController.current
+                val tts = rememberTextToSpeech()
                 TranslateTextField(
                     fromText = state.fromText,
                     toText = state.toText,
@@ -113,7 +117,10 @@ fun TranslateScreen(
                     onCloseClick = {
                         onEvent(TranslateEvent.CloseTranslation)
                     },
-                    onSpeakerClick = { /*TODO*/ },
+                    onSpeakerClick = {
+                        tts.language = state.toLanguage.toLocale() ?: Locale.ENGLISH
+                        tts.speak(state.toText, TextToSpeech.QUEUE_FLUSH, null, null)
+                    },
                     onTextFieldClick = {
                         onEvent(TranslateEvent.EditTranslation)
                     },
