@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
@@ -51,6 +53,14 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.ios)
             implementation(libs.sql.delight.native.driver)
+        }
+    }
+
+    targets.configureEach {
+        compilations.configureEach {
+            compilerOptions.configure {
+                freeCompilerArgs.add("-Xexpect-actual-classes")
+            }
         }
     }
 }
