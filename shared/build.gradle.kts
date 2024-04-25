@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
@@ -56,6 +54,8 @@ kotlin {
         }
     }
 
+    task("testClasses")
+
     targets.configureEach {
         compilations.configureEach {
             compilerOptions.configure {
@@ -74,5 +74,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+sqldelight {
+    database("TranslateDatabase") {
+        packageName = "com.betuel.translatorapp.database"
+        sourceFolders = listOf("sqldelight")
     }
 }
