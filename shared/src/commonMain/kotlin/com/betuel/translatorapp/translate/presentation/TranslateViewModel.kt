@@ -139,8 +139,8 @@ class TranslateViewModel(
             TranslateEvent.StopChoosingLanguage -> {
                 _state.update {
                     it.copy(
-                        isChoosingFromLanguage = true,
-                        isChoosingToLanguage = true
+                        isChoosingFromLanguage = false,
+                        isChoosingToLanguage = false
                     )
                 }
             }
