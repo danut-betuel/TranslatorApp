@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "romanian.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

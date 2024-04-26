@@ -1,13 +1,10 @@
 package com.betuel.translatorapp.android.translate.presentation
 
-import android.annotation.SuppressLint
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,7 +20,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -78,7 +74,9 @@ fun TranslateScreen(
                 onClick = { onEvent(TranslateEvent.RecordAudio) },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.size(75.dp).clip(RoundedCornerShape(37.5.dp))
+                modifier = Modifier
+                    .size(75.dp)
+                    .clip(RoundedCornerShape(37.5.dp))
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.mic),
@@ -144,7 +142,10 @@ fun TranslateScreen(
                     isTranslating = state.isTranslating,
                     fromLanguage = state.fromLanguage,
                     toLanguage = state.toLanguage,
-                    onTranslateClick = { onEvent(TranslateEvent.Translate) },
+                    onTranslateClick = {
+                        keyboardController?.hide()
+                        onEvent(TranslateEvent.Translate)
+                    },
                     onTextChange = {
                         onEvent(TranslateEvent.ChangeTranslationText(it))
                     },
