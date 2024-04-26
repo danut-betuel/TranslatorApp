@@ -141,7 +141,7 @@ private extension TranslateTextField {
                     Spacer()
                     Button(action: {
                         UIPasteboard.general.setValue(
-                            fromText,
+                            toText,
                             forPasteboardType: UTType.plainText.identifier)
                     }) {
                         Image(uiImage: UIImage(named: "copy")!)
