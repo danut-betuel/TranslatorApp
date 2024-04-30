@@ -1,6 +1,6 @@
 package com.betuel.translatorapp.android.voice_to_text.di
 
-import android.content.Context
+import android.app.Application
 import com.betuel.translatorapp.android.voice_to_text.data.AndroidVoiceToTextParser
 import com.betuel.translatorapp.voice_to_text.domain.VoiceToTextParser
 import dagger.Module
@@ -15,7 +15,7 @@ object VoiceToTextModule {
 
     @Provides
     @ViewModelScoped
-    fun provideVoiceToTextParser(context: Context): VoiceToTextParser {
-        return AndroidVoiceToTextParser(context)
+    fun provideVoiceToTextParser(app: Application): VoiceToTextParser {
+        return AndroidVoiceToTextParser(app)
     }
 }
