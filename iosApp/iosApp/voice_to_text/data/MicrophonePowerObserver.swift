@@ -35,7 +35,8 @@ class MicrophonePowerObserver : ObservableObject {
                 every: 1.0 / powerRatioEmissionsPerSecond,
                 tolerance: 1.0 / powerRatioEmissionsPerSecond,
                 on: .main,
-                in: .common)
+                in: .common
+            )
             .autoconnect()
             .sink { [weak self] _ in
                 recorder.updateMeters()
@@ -58,6 +59,6 @@ class MicrophonePowerObserver : ObservableObject {
         
         audioRecorder?.stop()
         audioRecorder = nil
-        self.micPowerRatio = 0.0
+        micPowerRatio = 0.0
     }
 }

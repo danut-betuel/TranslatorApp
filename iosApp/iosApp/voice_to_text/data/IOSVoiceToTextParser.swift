@@ -69,35 +69,36 @@ class IOSVoiceToTextParser: VoiceToTextParser, ObservableObject {
                     self?.updateState(result: result.bestTranscription.formattedString)
                 }
             }
-        }
-        
-        self.audioEngine = AVAudioEngine()
-        self.inputNode = self.audioEngine?.inputNode
-        
-        let recordingFormat  = self.inputNode?.outputFormat(forBus: 0)
-        self.inputNode?.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
-            self.audioBufferRequest?.append(buffer)
-        }
-        
-        self.audioEngine?.prepare()
-        
-        do {
-            try self.audioSession?.setCategory(.playAndRecord, mode: .spokenAudio, options: .duckOthers)
-            try self.audioSession?.setActive(true, options: .notifyOthersOnDeactivation)
-            
-            self.micObserver.startObserving()
-            
-            try self.audioEngine?.start()
-            
-            self.updateState(isSpeaking: true)
             
             
-            self.micPowerCancellable = self.micPowerRatio
-                .sink { [weak self] ratio in
-                    self?.updateState(powerRatio: ratio)
-                }
-        } catch {
-            self.updateState(error: error.localizedDescription, isSpeaking:  false)
+            self?.audioEngine = AVAudioEngine()
+            self?.inputNode = self?.audioEngine?.inputNode
+            
+            let recordingFormat  = self?.inputNode?.outputFormat(forBus: 0)
+            self?.inputNode?.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+                self?.audioBufferRequest?.append(buffer)
+            }
+            
+            self?.audioEngine?.prepare()
+            
+            do {
+                try self?.audioSession?.setCategory(.playAndRecord, mode: .spokenAudio, options: .duckOthers)
+                try self?.audioSession?.setActive(true, options: .notifyOthersOnDeactivation)
+                
+                self?.micObserver.startObserving()
+                
+                try self?.audioEngine?.start()
+                
+                self?.updateState(isSpeaking: true)
+                
+                
+                self?.micPowerCancellable = self?.micPowerRatio
+                    .sink { [weak self] ratio in
+                        self?.updateState(powerRatio: ratio)
+                    }
+            } catch {
+                self?.updateState(error: error.localizedDescription, isSpeaking:  false)
+            }
         }
     }
     
@@ -110,7 +111,6 @@ class IOSVoiceToTextParser: VoiceToTextParser, ObservableObject {
         audioBufferRequest = nil
         
         audioEngine?.stop()
-        audioEngine = nil
         
         inputNode?.removeTap(onBus: 0)
         
