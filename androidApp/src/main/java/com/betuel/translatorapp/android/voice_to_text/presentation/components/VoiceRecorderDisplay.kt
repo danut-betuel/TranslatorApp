@@ -19,8 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.betuel.translatorapp.android.TranslatorTheme
 import com.betuel.translatorapp.android.translate.presentation.components.gradientSurface
-import kotlin.math.PI
-import kotlin.math.sin
 import kotlin.random.Random
 
 @Composable
@@ -43,8 +41,8 @@ fun VoiceRecorderDisplay(
                 vertical = 8.dp
             )
             .drawBehind {
-                val powerRatioWith = 3.dp.toPx()
-                val powerRationCount = (size.width / (2 * powerRatioWith)).toInt()
+                val powerRatioWidth = 3.dp.toPx()
+                val powerRationCount = (size.width / (2 * powerRatioWidth)).toInt()
 
                 clipRect(
                     left = 0f,
@@ -60,11 +58,11 @@ fun VoiceRecorderDisplay(
                             drawRoundRect(
                                 color = primary,
                                 topLeft = Offset(
-                                    x = size.width - i * 2 * powerRatioWith,
+                                    x = size.width - i * 2 * powerRatioWidth,
                                     y = yTopStart
                                 ),
                                 size = Size(
-                                    width = powerRatioWith,
+                                    width = powerRatioWidth,
                                     height = (center.y - yTopStart) * 2f
                                 ),
                                 cornerRadius = CornerRadius(100f)
@@ -72,9 +70,7 @@ fun VoiceRecorderDisplay(
                         }
                 }
             }
-    ) {
-
-    }
+    )
 }
 
 @Preview

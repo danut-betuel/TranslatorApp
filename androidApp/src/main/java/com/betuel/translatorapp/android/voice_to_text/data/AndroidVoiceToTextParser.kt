@@ -2,10 +2,12 @@ package com.betuel.translatorapp.android.voice_to_text.data
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.speech.SpeechRecognizer.ERROR_CLIENT
 import com.betuel.translatorapp.android.R
 import com.betuel.translatorapp.core.domain.util.CommonStateFlow
 import com.betuel.translatorapp.core.domain.util.toCommonStateFlow
@@ -18,7 +20,11 @@ class AndroidVoiceToTextParser(
     private val context: Context
 ) : VoiceToTextParser, RecognitionListener {
 
-    private val recognizer = SpeechRecognizer.createSpeechRecognizer(context)
+    private val recognizer = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        SpeechRecognizer.createOnDeviceSpeechRecognizer(context)
+    } else {
+        SpeechRecognizer.createSpeechRecognizer(context)
+    }
 
     private val _state = MutableStateFlow(VoiceToTextParserState())
     override val state: CommonStateFlow<VoiceToTextParserState> = _state.toCommonStateFlow()
@@ -26,7 +32,13 @@ class AndroidVoiceToTextParser(
     override fun startListening(languageCode: String) {
         _state.update { VoiceToTextParserState() }
 
-        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+        val speechToTextAvailable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
+        } else {
+            SpeechRecognizer.isRecognitionAvailable(context)
+        }
+
+        if (!speechToTextAvailable) {
             _state.update {
                 it.copy(
                     error = context.getString(R.string.error_speech_recognition_unavailable)
@@ -95,6 +107,10 @@ class AndroidVoiceToTextParser(
     }
 
     override fun onError(error: Int) {
+        if (error == ERROR_CLIENT) {
+            return
+        }
+
         _state.update {
             it.copy(
                 error = "Error: $error"
