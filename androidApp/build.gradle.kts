@@ -15,6 +15,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "com.betuel.translatorapp.TestHiltRunner"
     }
     buildFeatures {
         compose = true
@@ -58,6 +60,13 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     implementation(libs.ktor.android)
+
+    implementation(libs.jUnit)
+    implementation(libs.compose.testing)
+    implementation(libs.compose.test.manifest)
+    implementation(libs.hilt.testing)
+    implementation(libs.androidX.test.runner)
+    implementation(libs.androidX.test.rules)
 
     debugImplementation(libs.compose.ui.tooling)
 }

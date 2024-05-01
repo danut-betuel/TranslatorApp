@@ -23,6 +23,7 @@ assertk = "0.25"
 turbine = "0.7.0"
 j-unit = "4.13.2"
 test-runner = "1.5.2"
+test-rules = "1.5.0"
 
 ksp = "1.5.30-1.0.0"
 
@@ -62,6 +63,7 @@ assertK = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assert
 app-cash-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 jUnit = { module = "junit:junit", version.ref = "j-unit" }
 androidX-test-runner = { module = "androidx.test:runner", version.ref = "test-runner" }
+androidX-test-rules = { module = "androidx.test:rules", version.ref = "test-rules" }
 compose-testing = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
