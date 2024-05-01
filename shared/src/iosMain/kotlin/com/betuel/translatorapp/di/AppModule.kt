@@ -8,10 +8,18 @@ import com.betuel.translatorapp.translate.data.translate.KtorTranslateClient
 import com.betuel.translatorapp.translate.domain.Translate
 import com.betuel.translatorapp.translate.domain.history.HistoryDataSource
 import com.betuel.translatorapp.translate.domain.translate.TranslateClient
+import com.betuel.translatorapp.voice_to_text.domain.VoiceToTextParser
 
-class AppModule {
+interface AppModule {
+    val historyDataSource: HistoryDataSource
+    val translateClient: TranslateClient
+    val translateUseCase: Translate
+    val voiceParser: VoiceToTextParser
+}
 
-    val historyDataSource: HistoryDataSource by lazy {
+class AppModuleImpl(override val voiceParser: VoiceToTextParser) : AppModule {
+
+    override val historyDataSource: HistoryDataSource by lazy {
         SqlDelightHistoryDataSource(
             db = TranslateDatabase(
                 DatabaseDriverFactory().create()
@@ -19,13 +27,13 @@ class AppModule {
         )
     }
 
-    private val translateClient: TranslateClient by lazy {
+    override val translateClient: TranslateClient by lazy {
         KtorTranslateClient(
             HttpClientFactory().create()
         )
     }
 
-    val translateUseCase: Translate by lazy {
+    override val translateUseCase: Translate by lazy {
         Translate(translateClient, historyDataSource)
     }
 }
