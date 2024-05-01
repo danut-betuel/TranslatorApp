@@ -5,7 +5,7 @@ import com.betuel.translatorapp.R
 import com.betuel.translatorapp.core.domain.language.Language
 import java.util.Locale
 
-actual class UiLanguage(
+actual data class UiLanguage(
     @DrawableRes val drawableRes: Int,
     actual val language: Language
 ) {
